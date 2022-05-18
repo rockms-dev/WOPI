@@ -1,0 +1,15 @@
+{
+    "name": "ms/wopi",
+    "autoload": {
+        "psr-4": {
+            "Ms\\Wopi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "uzair",
+            "email": "muhammad.uzair@cooperativecomputing.com"
+        }
+    ],
+    "require": {}
+}
