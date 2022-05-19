@@ -2,7 +2,7 @@
     "name": "ms/wopi",
     "autoload": {
         "psr-4": {
-            "Ms\\Wopi\\": "src/"
+            "MS\\Wopi\\": "src/"
         }
     },
     "authors": [
