@@ -6,7 +6,7 @@ return [
      * this configration left empty to be implemented by the user There's
      * plans to implement example storage manager in the future though.
      */
-    'document_manager' => null,
+    'document_manager' => MS\Wopi\Services\DBDocumentManager::class,
 
      /*
      * Default UI langauge.
@@ -40,75 +40,72 @@ return [
      /*
      * Collabora or Microsoft Office 365 or any WOPI client url.
      */
-    'client_url' => env('WOPI_CLIENT_URL', ''),
+    'client_url' => env('WOPI_CLIENT_URL', 'https://onenote.officeapps.live.com/hosting/discovery'),
 
     /*
-     * Tells the WOPI client when an access token expires, represented as
-     * a timestamp. It's not a duration rather than a date of expiry.
+     * Collabora or Microsoft Office 365 or any WOPI client url.
      */
-    'access_token_ttl' => env('WOPI_ACCESS_TOKEN_TTL', 0),
+    'server_url' => env('WOPI_SERVER_URL', ''),
+
+   /*
+    * Tells the WOPI client when an access token expires, represented as
+    * a timestamp. It's not a duration rather than a date of expiry.
+    */
+   'access_token_ttl' => env('WOPI_ACCESS_TOKEN_TTL', 0),
+
+   /*
+    * Every request will be approved using RSA keys.
+    * It's not recommended to disable it.
+    */
+   'enable_proof_validation' => false,
+
+   /*
+    * Enable/disable support for deleting documents.
+    * default: false
+    */
+   'support_delete' => true,
+
+   /*
+    * Enable/disable support for renaming documents.
+    * default: false
+    */
+   'support_rename' => true,
+
+   /*
+    * Enable/disable support for updating documents.
+    * default: true
+    */
+   'support_update' => true,
+
+   /*
+    * Enable/disable support locking functionality,
+    * thought you have to implement lock functions.
+    *
+    * default: false
+    */
+   'support_locks' => true,
+
+   /*
+    * Enable/disable support for GetLock operation.
+    *
+    * default: false
+    */
+   'support_get_locks' => true,
 
     /*
-     * Every request will be approved using RSA keys.
-     * It's not recommended to disable it.
-     */
-    'enable_proof_validation' => true,
+    * Enable/disable support for lock IDs up to 1024 ASCII characters
+    * long. If disabled WOPI clients will assume that lock IDs
+    * are limited to 256 ASCII characters.
+    *
+    * default: false
+    */
+   'support_extended_lock_length' => true,
 
-    /*
-     * Enable/disable support for deleting documents.
-     * @default false
-     */
-    'support_delete' => false,
-
-    /*
-     * Default user name string that will appear in case
-     * no user passed to the client.
-     */
-    'default_user' => 'Unknown User',
-
-    /*
-     * Enable/disable support for renaming documents.
-     *
-     * @default false
-     */
-    'support_rename' => false,
-
-    /*
-     * Enable/disable support for updating documents.
-     * @default true
-     */
-    'support_update' => true,
-
-    /*
-     * Enable/disable support locking functionality,
-     * thought you have to implement lock functions.
-     *
-     * @default false
-     */
-    'support_locks' => false,
-
-    /*
-     * Enable/disable support for GetLock operation.
-     *
-     * @default false
-     */
-    'support_get_locks' => false,
-
-    /*
-     * Enable/disable support for lock IDs up to 1024 ASCII characters
-     * long. If disabled WOPI clients will assume that lock IDs
-     * are limited to 256 ASCII characters.
-     *
-     * @default false
-     */
-    'support_extended_lock_length' => false,
-
-    /*
-     * Enable/disable support for storing basic information
-     * about the user and enable PutUserInfo operation.
-     *
-     * @default false
-     */
-    'support_user_info' => false,
-
+       /*
+    * Enable/disable support for storing basic information
+    * about the user and enable PutUserInfo operation.
+    *
+    * @default false
+    */
+   'support_user_info' => true,
 ];

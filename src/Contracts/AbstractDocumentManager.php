@@ -285,19 +285,11 @@ abstract class AbstractDocumentManager
         ]);
 
         
-        //$url = "https://word-edit.officeapps.live.com/we/wordeditorframe.aspx?ui=en-us&rs=en-us";
-        //return $url;
-
-        $url = "https://FFC-onenote.officeapps.live.com/hosting/WopiTestFrame.aspx?ui=en-us&rs=en-us&hid=EwCIA8l6BAAUwihrrCrmQ4wuIJX5mbj7rQla6TUAAdjBQjNSI7kYE7P6l0i7ihppwYAO2tkIs/frEM4yCTikspbDKlbCcjiaPo2Q+MZNttpjhvnKzsGbEfkr9FPs+JJewwihLbOFXxSUuGum7mRxMxA9GJmx9oHkGW3y7S6cl0z7De/9M27R3+7m8QEqIPCEnscJuRFA4O5k455VwSzmBMIkE1HDQd965i0NeDtU/UMNcpMU79XugW02Tz0O+k0nWtt7WcbdM6Npo6FHDA9Sl6dNjEpuPmGy1jl2G/ylbaG+sMhpX6BRGY4Mh49YjaOEn4zpFGoxVWlR3z/VuZ+XjEl14g6yssncXxFcubK9irhS6/QcFUvWZfXmBaL9TAEDZgAACCns/LPMMIKYWAIUJr+NeLdXvr3GBG83xCNF288pn5WNdIGryZx2KuUmEFmCyeEyF/bukQEpSdQpyFr1ATpZVBPRLts+ceWVfW+kttu25ob0kIH7dsKsgDHB+VzZg/HBrXaIZg/GoKZBsMjtcsnZBuMCi4m9QQmshfo2rCtH16m29pTLrZbJARYBMpA+EzshC8se2YRRRYENDsZsgXkt1TEY6wjI7+HBmFzVoI8/sB4K6d1mzrf8Q3pxWEPQ01ZooLuL7LOd4sYj6mzKJWTEwSAN8eDxEK4jRfbqYIjMzccZVeB+XNRfvcat9cIHxMYGAoCHr4Kp5Ys9TYFm4p6UFakuSbIL7TTMbkvC+ShiOUIF9Nm0baRZ3fC5UzdktkA2gwm9W9HMYsFHPNpDQcaxcvHR+yObfgID0KU+SrATn2q4Y8Kg32kT9Vum7s9FkA/0qZWyALPfmh+gfiidUEiuquhwCW9qgkkvdvBPYHLyggT6VotRTndyffPmVj6LNrdNp00eTwbsojK3pmqvcPHZDYumJ0UxpdWL/fEgRuN50mVgFfp7PGl4Z5ex9AFA+k4weEVjURg3tE7u4zUZahaBIxGzYRW/jvAa1AaNJyJq8OymxP18cJUgmdez32EY7L0vP1wy4QdcrNq2F46MbhZE1HmiQn3A0qxpJsYOM/RPSkDZFXXZIvMfnNTGGjx0SK2ZjbT79kcnfTfXyHLakOD9jAYF38DQAU/+H7nPiV83u34S4w2FYwChWxkpinMrCEiGB98CphrpPBgBvLQ6ih+jWFD7OCdWw8fMMETSJ+ix7gDgo1CXAg==&wopisrc=oresoft-dev.dev/wopi/files/61f957411da49923161af92a ";
-
-        // todo handle microsoft office 365 <> placeholders
-        //return 'https://FFC-onenote.officeapps.live.com/hosting/WopiTestFrame.aspx?<ui=UI_LLCC&><rs=DC_LLCC&><dchat=DISABLE_CHAT&><hid=HOST_SESSION_ID&><sc=SESSION_CONTEXT&><wopisrc=WOPI_SOURCE&><IsLicensedUser=BUSINESS_USER&><testcategory=VALIDATOR_TEST_CATEGORY>';
-
         $actionUrl = optional(Discovery::discoverAction($extension, $action));
 
-        // if (is_null($actionUrl['urlsrc'])) {
-        //     throw new Exception("Unsupported action \"{$action}\" for \"{$extension}\" extension.");
-        // }
+        if (is_null($actionUrl['urlsrc'])) {
+            throw new Exception("Unsupported action \"{$action}\" for \"{$extension}\" extension.");
+        }
 
         return "{$actionUrl['urlsrc']}lang={$lang}&WOPISrc={$url}";
     }
