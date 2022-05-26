@@ -264,12 +264,12 @@ abstract class AbstractDocumentManager
     /**
      * Convenient method for getUrlForAction.
      */
-    public function generateUrl(string $lang = 'en-Us'): string
+    public function generateUrl(array $placeholders): string
     {
-        return $this->getUrlForAction('edit', $lang);
+        return $this->getUrlForAction('edit', $placeholders);
     }
 
-    public function getUrlForAction(string $action, string $lang = 'en-US'): string
+    public function getUrlForAction(string $action, $placeholders): string
     {
         /** @var ConfigRepositoryInterface */
         $config = app(ConfigRepositoryInterface::class);
@@ -291,7 +291,12 @@ abstract class AbstractDocumentManager
             throw new Exception("Unsupported action \"{$action}\" for \"{$extension}\" extension.");
         }
 
-        return "{$actionUrl['urlsrc']}lang={$lang}&WOPISrc={$url}";
+        $fullActionUrl = explode('?', $actionUrl['urlsrc']);
+        $baseActionUrl = $fullActionUrl[0];
+        $placeholders = http_build_query($placeholders);
+        $actionUrl = "{$baseActionUrl}?{$placeholders}&wopisrc={$url}";
+
+        return $actionUrl;
     }
 
     /**

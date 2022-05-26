@@ -33,7 +33,6 @@ class Wopi implements WopiInterface
         }, 200, [
             WopiInterface::HEADER_ITEM_VERSION => $document->version(),
             'Content-Type' => 'application/octet-stream',
-            'Content-Length' => $document->size(),
             'Content-Disposition' => sprintf('attachment; filename=%s', $document->basename()),
         ]);
     }

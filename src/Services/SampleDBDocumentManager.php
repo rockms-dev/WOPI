@@ -1,6 +1,6 @@
 <?php
 
-namespace MS\Wopi\Services;
+namespace App\Services;
 
 use MS\Wopi\Models\Document;
 use Illuminate\Support\Carbon;

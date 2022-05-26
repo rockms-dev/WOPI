@@ -35,7 +35,15 @@ class WopiServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('wopi')
+            ->hasMigration('create_documents_table')
             ->hasRoute('wopi')
             ->hasConfigFile();
+    }
+
+    public function bootingPackage()
+    {
+        $this->publishes([
+            __DIR__.'/Services/SampleDBDocumentManager.php' => app_path('Services/DBDocumentManager.php')
+        ], 'wopi-document-manager');
     }
 }
