@@ -8,7 +8,7 @@
             "src/Support/helpers.php"
         ]
     },
-    "license": "CC",
+    "license": "MIT",
     "authors": [
         {
             "name": "uzair",
