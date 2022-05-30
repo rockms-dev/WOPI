@@ -1,5 +1,5 @@
 {
-    "name": "ms/wopi",
+    "name": "cc/wopi",
     "autoload": {
         "psr-4": {
             "MS\\Wopi\\": "src/"
