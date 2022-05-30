@@ -19,7 +19,7 @@ class CreateDocumentsTable extends Migration
             $table->string('path');
             $table->string('lock')->nullable();
             $table->integer('size');
-            $table->text('hash')->default('');
+            $table->text('hash');
             $table->string('version')->nullable();
             $table->string('extension');
             $table->foreignId('user_id')->constrained();
