@@ -40,9 +40,6 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
 
     public function getUserInfo(): string
     {
-        // login
-        Auth::setUser(User::find(1));
-
         return (string) auth()->user()->info;
     }
 
@@ -56,9 +53,6 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
 
     public static function putUserInfo(string $userInfo, ?string $documentId, ?string $accessToken): void
     {
-        // login
-        Auth::setUser(User::find(1));
-
         auth()->user()->update(['info' => $userInfo]);
     }
 
@@ -118,7 +112,7 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
     {
         $user = Auth::user();
 
-        return is_null($user) ? 'Guest' : $user->name;
+        return is_null($user) ? 'Guest' : $user->first_name.' '.$user->last_name;
     }
 
     public function basename(): string

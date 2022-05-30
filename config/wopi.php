@@ -72,6 +72,12 @@ return [
    'support_rename' => true,
 
    /*
+    * Default user name string that will appear in case
+    * no user passed to the client.
+    */
+   'default_user' => 'Unknown User',
+
+   /*
     * Enable/disable support for updating documents.
     * default: true
     */
