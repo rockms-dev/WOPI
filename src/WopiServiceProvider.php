@@ -36,7 +36,7 @@ class WopiServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('wopi')
-            ->hasMigration('create_documents_table')
+            ->hasMigration('create_files_table')
             ->hasRoute('wopi')
             ->hasViews('wopi')
             ->hasViewComponent('wopi', Frame::class)
