@@ -2,6 +2,7 @@
 
 namespace MS\Wopi;
 
+use MS\Wopi\Components\Frame;
 use MS\Wopi\Contracts\AbstractDocumentManager;
 use MS\Wopi\Contracts\ConfigRepositoryInterface;
 use MS\Wopi\Contracts\WopiInterface;
@@ -37,6 +38,8 @@ class WopiServiceProvider extends PackageServiceProvider
             ->name('wopi')
             ->hasMigration('create_documents_table')
             ->hasRoute('wopi')
+            ->hasViews('wopi')
+            ->hasViewComponent('wopi', Frame::class)
             ->hasConfigFile();
     }
 

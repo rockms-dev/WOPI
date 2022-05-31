@@ -2,7 +2,8 @@
     "name": "rock-ms/wopi",
     "autoload": {
         "psr-4": {
-            "MS\\Wopi\\": "src/"
+            "MS\\Wopi\\": "src/",
+            "MS\\Wopi\\Components\\": "Components/"
         },
         "files": [
             "src/Support/helpers.php"
