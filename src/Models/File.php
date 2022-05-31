@@ -5,7 +5,7 @@ namespace MS\Wopi\Models;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
-class Document extends Model
+class File extends Model
 {
     protected $guarded = [];
 

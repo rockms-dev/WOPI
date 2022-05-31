@@ -2,7 +2,7 @@
 
 namespace MS\Wopi\Services;
 
-use MS\Wopi\Models\Document;
+use MS\Wopi\Models\File;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -20,11 +20,11 @@ use MS\Wopi\Contracts\Concerns\OverridePermissions;
 
 class DBDocumentManager extends AbstractDocumentManager implements Deleteable, Renameable, HasHash, HasMetadata, StopRelayingOnBaseNameToGetFileExtension, InteractsWithUserInfo, OverridePermissions
 {
-    protected Document $document;
+    protected File $file;
 
-    public function __construct(Document $document)
+    public function __construct(File $file)
     {
-        $this->document = $document;
+        $this->file = $file;
     }
 
     public function isReadOnly(): bool
@@ -58,28 +58,28 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
 
     public function sha256Hash(): string
     {
-        return $this->document->hash;
+        return $this->file->hash;
     }
 
     public function lastModifiedTime(): string
     {
-        return Carbon::parse($this->document->updated_at, 'UTC')->toIso8601String();
+        return Carbon::parse($this->file->updated_at, 'UTC')->toIso8601String();
     }
 
     public function extension(): string
     {
-        return ".".$this->document->extension;
+        return ".".$this->file->extension;
     }
 
     public static function find(string $documentId): AbstractDocumentManager
     {
-        $document =  Document::findorFail($documentId);
+        $document =  File::findorFail($documentId);
         return new static($document);
     }
 
     public static function findByName(string $documentname): AbstractDocumentManager
     {
-        $document = Document::whereName($documentname)->firstOrFail();
+        $document = File::whereName($documentname)->firstOrFail();
         return new static($document);
     }
 
@@ -87,7 +87,7 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
     {
         $hash = hash('sha256', base64_encode($properties['content']));
 
-        $document = Document::create([
+        $document = File::create([
             'name' => $properties['basename'],
             'size' => $properties['size'],
             'path' => $properties['basename'],
@@ -105,7 +105,7 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
 
     public function id(): string
     {
-        return $this->document->id;
+        return $this->file->id;
     }
 
     public function userFriendlyName(): string
@@ -117,37 +117,37 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
 
     public function basename(): string
     {
-        return $this->document->name;
+        return $this->file->name;
     }
 
     public function owner(): string
     {
-        return $this->document->user->id;
+        return $this->file->user->id;
     }
 
     public function size(): int
     {
-        return $this->document->size;
+        return $this->file->size;
     }
 
     public function version(): string
     {
-        return $this->document->version;
+        return $this->file->version;
     }
 
     public function content(): string
     {
-        return file_get_contents(Storage::disk('public')->path($this->document->path));
+        return file_get_contents(Storage::disk('public')->path($this->file->path));
     }
 
     public function isLocked(): bool
     {
-        return !empty($this->document->lock);
+        return !empty($this->file->lock);
     }
 
     public function getLock(): string
     {
-        return $this->document->lock;
+        return $this->file->lock;
     }
 
     public function put(string $content, array $editorsIds = []): void
@@ -157,35 +157,35 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
         $hash = hash('sha256', base64_encode($content));
         $newVersion = uniqid();
 
-        file_put_contents(Storage::disk('public')->path($this->document->path), $content);
-        $this->document->fill(['size' => $size, 'hash' => $hash, 'version' => $newVersion])->update();
+        file_put_contents(Storage::disk('public')->path($this->file->path), $content);
+        $this->file->fill(['size' => $size, 'hash' => $hash, 'version' => $newVersion])->update();
     }
 
     public function deleteLock(): void
     {
-        $this->document->fill(['lock' => ''])->update();
+        $this->file->fill(['lock' => ''])->update();
     }
 
     public function lock(string $lockId): void
     {
-        $this->document->fill(['lock' => $lockId])->update();
+        $this->file->fill(['lock' => $lockId])->update();
     }
 
     public function delete(): void
     {
-        Storage::disk('public')->delete($this->document->path);
-        $this->document->delete();
+        Storage::disk('public')->delete($this->file->path);
+        $this->file->delete();
     }
 
     public function rename(string $newName): void
     {
-        $oldPath = $this->document->path;
+        $oldPath = $this->file->path;
         $this
             ->file
-            ->fill(['name' => "{$newName}.{$this->document->extension}", 'path' => "{$newName}.{$this->file->extension}"])
+            ->fill(['name' => "{$newName}.{$this->file->extension}", 'path' => "{$newName}.{$this->file->extension}"])
             ->update();
 
-        $newPath = $this->document->path;
+        $newPath = $this->file->path;
 
 
         Storage::disk('public')->move($oldPath, $newPath);
