@@ -40,8 +40,9 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
 
     public function getUserInfo(): string
     {
-        return (string) auth()->user()->info;
+        return (string) auth()->user()?->info;
     }
+
 
     public function supportUserInfo(): bool
     {
