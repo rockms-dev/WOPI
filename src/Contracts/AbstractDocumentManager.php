@@ -152,6 +152,22 @@ abstract class AbstractDocumentManager
     abstract public function basename(): string;
 
     /**
+     * Storage is the directory path to store file downloaded from 
+     * external url property of file. 
+     */
+    abstract public function storagePath(): ?string;
+
+    /**
+     * Url property represent external url for download file
+     */
+    abstract public function url(): ?string;
+
+    /**
+     * Path property represent path of a file stored in server
+     */
+    abstract public function path(): ?string;
+
+    /**
      * Uniquely identifies the owner of the file. In most
      * cases, the user who uploaded or created the file
      * should be considered the owner.
@@ -200,6 +216,11 @@ abstract class AbstractDocumentManager
      * Lock the document prevent it from being altered or deleted.
      */
     abstract public function lock(string $lockId): void;
+
+    /**
+     * Set the file path after downloading from external URl.
+     */
+    abstract public function setFilePath($path): void;
 
     /**
      * Manually set user id.

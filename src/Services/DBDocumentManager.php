@@ -121,6 +121,27 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
         return $this->file->name;
     }
 
+    public function storagePath(): ?string
+    {
+        return $this->file->storage_path;
+    }
+
+    public function url(): ?string
+    {
+        return $this->file->url;
+    }
+
+    public function path(): ?string
+    {
+        return $this->file->path;
+    }
+
+    public function setFilePath($path): void
+    {
+        $this->file->path = $path;
+        $this->file->save();
+    }
+
     public function owner(): string
     {
         return $this->file->user->id;

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use MS\Wopi\Contracts\AbstractDocumentManager;
 use MS\Wopi\Contracts\Concerns\OverridePermissions;
+use Illuminate\Support\Facades\File;
 use MS\Wopi\Contracts\WopiInterface;
 use Throwable;
 
@@ -17,6 +18,15 @@ class Wopi implements WopiInterface
         $documentManager = app(AbstractDocumentManager::class);
 
         $document = $documentManager::find($fileId);
+        if (
+            !empty(trim($document->storagePath()))
+            && !empty(trim($document->url()))
+            && !File::exists(public_path($document->storagePath().'/'.$document->basename()))
+        ) {
+            $path = $document->storagePath().'/'.$document->basename();
+            File::copy($document->url(), $path);
+            $document->setFilePath($path);
+        }
 
         return response()->json($document->getResponseProprties());
     }
