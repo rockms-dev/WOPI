@@ -23,6 +23,9 @@ class Wopi implements WopiInterface
             && !empty(trim($document->url()))
             && !File::exists(public_path($document->storagePath().'/'.$document->basename()))
         ) {
+            if(!File::isDirectory(public_path($document->storagePath())))
+                File::makeDirectory(public_path($document->storagePath()), 0644, true, true);
+            
             $path = $document->storagePath().'/'.$document->basename();
             File::copy($document->url(), $path);
             $document->setFilePath($path);
