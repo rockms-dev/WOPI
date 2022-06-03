@@ -6,7 +6,7 @@ return [
      * this configration left empty to be implemented by the user There's
      * plans to implement example storage manager in the future though.
      */
-    'document_manager' => MS\Wopi\Services\DBDocumentManager::class,
+    'document_manager' => App\Services\DBDocumentManager::class,
 
      /*
      * Default UI langauge.

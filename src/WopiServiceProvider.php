@@ -48,5 +48,9 @@ class WopiServiceProvider extends PackageServiceProvider
         $this->publishes([
             __DIR__.'/Services/SampleDBDocumentManager.php' => app_path('Services/DBDocumentManager.php')
         ], 'wopi-document-manager');
+
+        $this->publishes([
+            __DIR__.'/Models/File.php' => app_path('Models/File.php')
+        ], 'wopi-file-model');
     }
 }
