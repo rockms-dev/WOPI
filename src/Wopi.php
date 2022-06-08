@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use MS\Wopi\Contracts\AbstractDocumentManager;
 use MS\Wopi\Contracts\Concerns\OverridePermissions;
-use Illuminate\Filesystem\Filesystem as File;
 use MS\Wopi\Contracts\WopiInterface;
 use Throwable;
 
@@ -18,19 +17,9 @@ class Wopi implements WopiInterface
         $documentManager = app(AbstractDocumentManager::class);
         
         $document = $documentManager::find($fileId);
-        $file = (new File);
-        if (
-            !empty(trim($document->storagePath()))
-            && !empty(trim($document->url()))
-            && !$file->exists(public_path($document->storagePath().'/'.$document->basename()))
-        ) {
-            if(!$file->isDirectory(public_path($document->storagePath())))
-                $file->makeDirectory(public_path($document->storagePath()), 0775, true, true);
-            
-            $path = $document->storagePath().'/'.$document->basename();
-            $file->copy($document->url(), $path);
-            $document->setFilePath($path);
-        }
+        
+        /* Download external file if not exist in system */
+        downloadFile($document);
 
         return response()->json($document->getResponseProprties());
     }
