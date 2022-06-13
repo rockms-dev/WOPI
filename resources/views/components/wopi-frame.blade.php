@@ -8,7 +8,7 @@
         margin: 0;
         border: none;
         display: block;
-        min-height: 330vh;
+        min-height: 150vh;
     }
 </style>
 <form id="office_form" name="office_form" style="display: none;" target="office_frame" action="{!! $url !!}" method="post">
