@@ -1,6 +1,8 @@
 <style type="text/css">
     #office_frame {
         width: 100%;
+        height: 100%;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -8,7 +10,6 @@
         margin: 0;
         border: none;
         display: block;
-        min-height: 150vh;
     }
 </style>
 <form id="office_form" name="office_form" style="display: none;" target="office_frame" action="{!! $url !!}" method="post">
