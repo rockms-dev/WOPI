@@ -57,7 +57,7 @@ return [
     * Every request will be approved using RSA keys.
     * It's not recommended to disable it.
     */
-   'enable_proof_validation' => false,
+   'enable_proof_validation' => true,
 
    /*
     * Enable/disable support for deleting documents.
