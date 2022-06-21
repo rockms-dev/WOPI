@@ -23,7 +23,7 @@ class   Frame extends Component
 
         $this->access_token = Str::random(15);
         $this->ttl = 0;
-        $this->url = $document->generateUrl([
+        $this->url = $document->getUrlForAction('view', [
             'ui' => 'en',
             'rs' => 'en',
         ]);
