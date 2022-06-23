@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 use Illuminate\Support\Str;
 use MS\Wopi\Contracts\AbstractDocumentManager;
 
-class   Frame extends Component
+class Frame extends Component
 {
     public $url;
     public $access_token;
@@ -21,7 +21,7 @@ class   Frame extends Component
     {
         $document = app(AbstractDocumentManager::class)::find($id);
 
-        $this->access_token = Str::random(15);
+        $this->access_token = encrypt(Str::random(5).'_'.auth()->id());
         $this->ttl = 0;
         $this->url = $document->getUrlForAction('view', [
             'ui' => 'en',
