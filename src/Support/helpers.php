@@ -10,7 +10,7 @@ if(!function_exists('downloadFile')) {
         if (
             !empty(trim($document->storagePath()))
             && !empty(trim($document->url()))
-            && !$file->exists(Storage::disk('public')->path($document->storagePath().'/'.$document->basename()))
+            && !$file->exists(Storage::disk('public')->path($document->path()))
         ) {
             if(!$file->isDirectory(Storage::disk('public')->path($document->storagePath()))) {
                 $file->makeDirectory(Storage::disk('public')->path($document->storagePath()), 0775, true, true);

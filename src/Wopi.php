@@ -21,11 +21,23 @@ class Wopi implements WopiInterface
         /* Download external file if not exist in system */
         downloadFile($document);
 
+	try {
+        decrypt(request()->query('access_token'));
+	} catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+		return response('', 401);
+	}
+
         return response()->json($document->getResponseProprties());
     }
 
     public function getFile(string $fileId, string $accessToken, Request $request)
     {
+
+        try {
+            decrypt(request()->query('access_token'));
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response('', 401);
+        }
         /** @var AbstractDocumentManager */
         $documentManager = app(AbstractDocumentManager::class);
 
@@ -42,6 +54,12 @@ class Wopi implements WopiInterface
 
     public function putFile(string $fileId, string $accessToken, Request $request)
     {
+        try {
+            decrypt(request()->query('access_token'));
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response('', 401);
+        }
+
         /** @var AbstractDocumentManager */
         $documentManager = app(AbstractDocumentManager::class);
 
@@ -96,6 +114,14 @@ class Wopi implements WopiInterface
         $version = $document->version();
         $lockHeader = $request->header(WopiInterface::HEADER_LOCK);
 
+
+	    try {
+            decrypt(request()->query('access_token'));
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response('', 401);
+        }
+
+
         // If the file is currently locked and the X-WOPI-OldLock value does not
         // not match the lock currently on the file, or if the file is unlocked,
         // the host must return a 409 response include an X-WOPI-Lock response.
@@ -145,6 +171,13 @@ class Wopi implements WopiInterface
 
         $version = $document->version();
         $lockHeader = $request->header(WopiInterface::HEADER_LOCK);
+
+	    try {
+            decrypt(request()->query('access_token'));
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            return response('', 401);
+        }
+
 
         // check if the file is locked
         if (! $document->isLocked()) {

@@ -184,15 +184,18 @@ class ProofValidator
      */
     private function verify(string $expected, string $signedProof, string $key): bool
     {
-        $rsa = new RSA();
+        try {    
+            $rsa = new RSA();
+            if (! $rsa->loadKey($key)) {
+                return false;
+            }
 
-        if (! $rsa->loadKey($key)) {
+            $rsa->setSignatureMode(RSA::SIGNATURE_PKCS1);
+            $rsa->setHash('sha256');
+
+            return $rsa->verify($expected, (string) base64_decode($signedProof, true));
+        } catch (\Throwable $e) {
             return false;
         }
-
-        $rsa->setSignatureMode(RSA::SIGNATURE_PKCS1);
-        $rsa->setHash('sha256');
-
-        return $rsa->verify($expected, (string) base64_decode($signedProof, true));
     }
 }
