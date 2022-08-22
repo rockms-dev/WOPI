@@ -22,7 +22,7 @@ class Frame extends Component
         $document = app(AbstractDocumentManager::class)::find($id);
 
         $this->access_token = encrypt(Str::random(5).'_'.auth()->id());
-        $this->ttl = 0;
+        $this->ttl = strtotime("+10 hours")*1000;
         $this->url = $document->getUrlForAction('view', [
             'ui' => 'en',
             'rs' => 'en',

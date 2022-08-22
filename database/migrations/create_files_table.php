@@ -19,7 +19,7 @@ class CreateFilesTable extends Migration
             $table->string('path')->nullable();
             $table->string('storage_path')->nullable();
             $table->string('url')->nullable();
-            $table->string('lock')->nullable();
+            $table->string('lock', 2096)->nullable();
             $table->integer('size');
             $table->text('hash');
             $table->string('version')->nullable();

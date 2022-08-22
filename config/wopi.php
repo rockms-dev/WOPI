@@ -69,7 +69,7 @@ return [
     * Enable/disable support for renaming documents.
     * default: false
     */
-   'support_rename' => true,
+   'support_rename' => false,
 
    /*
     * Default user name string that will appear in case
@@ -113,5 +113,5 @@ return [
     *
     * @default false
     */
-   'support_user_info' => true,
+   'support_user_info' => false,
 ];
