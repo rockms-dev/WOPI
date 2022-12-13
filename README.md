@@ -1,5 +1,7 @@
 # Wopi
 
+**Minimum PHP version:** *8.0*
+
 ## Installation
 
 ```bash
