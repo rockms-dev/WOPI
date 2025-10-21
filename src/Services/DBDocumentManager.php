@@ -177,10 +177,11 @@ class DBDocumentManager extends AbstractDocumentManager implements Deleteable, R
         // calculate content size and hash, be carefull with large contents!
         $size = strlen($content);
         $hash = hash('sha256', base64_encode($content));
-        $newVersion = uniqid();
+        $newVersion = uniqid('', true);
 
         file_put_contents(Storage::disk('public')->path($this->file->path), $content);
-        $this->file->fill(['size' => $size, 'hash' => $hash, 'version' => $newVersion])->update();
+        $this->file->fill(['size' => $size, 'hash' => $hash, 'version' => $newVersion])->save();
+        $this->file->refresh();
     }
 
     public function deleteLock(): void
