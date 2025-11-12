@@ -12,17 +12,27 @@ class ValidateProof
 {
     public function handle(Request $request, Closure $next)
     {
-        // Be carefull with database based config!
-        $isproofValidationEnabled = app(ConfigRepositoryInterface::class)->getEnableProofValidation();
+        try {
+           // Be carefull with database based config!
+            $isproofValidationEnabled = app(ConfigRepositoryInterface::class)->getEnableProofValidation();
 
-        if (! $isproofValidationEnabled) {
-            return $next($request);
+            if (! $isproofValidationEnabled) {
+                return $next($request);
+            }
+
+            if (ProofValidator::isValid(ProofValidatorInput::fromRequest($request))) {
+                return $next($request);
+            }
+            return abort(500);
         }
-
-        if (ProofValidator::isValid(ProofValidatorInput::fromRequest($request))) {
-            return $next($request);
+        catch (\Exception $e) {
+            \Log::error('Proof validation failed.', [
+                'exception' => get_class($e),
+                'message'   => $e->getMessage(),
+                'file'      => $e->getFile(),
+                'line'      => $e->getLine(),
+          ]);
+            return abort(500);
         }
-
-        return abort(500);
     }
 }
